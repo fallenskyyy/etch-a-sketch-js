@@ -3,41 +3,52 @@ const btn = document.querySelectorAll("#color")
 const btnResize = document.querySelector("#resize")
 const gridDivV = document.createElement("div")
 let gridSize = 16
+let oGridSize = 16
 let color = "blue"
 
-for(let i = 0; i < gridSize/2; i++){
-    const gridDivV = document.createElement("div")
-    gridDivV.classList.add("grdV")
-    container.appendChild(gridDivV)
-    for(let j = 0; j < gridSize/2; j++){
-        const gridDivH = document.createElement("div")
-        gridDivH.classList.add("grdH")
-        gridDivV.appendChild(gridDivH)
+function createNGrid(){
+    gridSize =  prompt("Enter new grid size")
+    createGrid(gridSize, oGridSize)
+    const gridDivHh = document.querySelectorAll(".grdH")
+    gridDivHh.forEach(element => {
+        console.log("1")
+        element.addEventListener("mouseover", () =>{
+            element.style.cssText = "background: "+ color +";"
+        })
+    });
+}
+
+function createGrid(gridSize, oGridSize){
+    while (true){
+        let isEmpty = document.getElementById('main').innerHTML === ""; 
+        if (isEmpty){
+            for(let i = 0; i < gridSize/2; i++){
+                const gridDivV = document.createElement("div")
+                gridDivV.classList.add("grdV")
+                container.appendChild(gridDivV)
+                for(let j = 0; j < gridSize/2; j++){
+                    const gridDivH = document.createElement("div")
+                    gridDivH.classList.add("grdH")
+                    gridDivV.appendChild(gridDivH)
+                }
+            }
+            oGridSize = gridSize
+            break
+        }
+        else{
+            const gridDivV = document.querySelectorAll(".grdV");
+            gridDivV.forEach(element =>{
+                container.removeChild(element)
+            })
+        }
     }
 }
 
-btnResize.addEventListener("click", () =>{
-    newGridSize = prompt("Enter grid size")
-    for(let i = 0; i < gridSize/2; i++){
-        gridDivV.removeChild(gridDivH)
-        for(let j = 0; j < gridSize/2; j++){
-            container.removeChild(gridDivV)
-        }
-    }
-    for(let i = 0; i < newGridSize/2; i++){
-        const gridDivV = document.createElement("div")
-        gridDivV.classList.add("grdV")
-        container.appendChild(gridDivV)
-        for(let j = 0; j < newGridSize/2; j++){
-            const gridDivH = document.createElement("div")
-            gridDivH.classList.add("grdH")
-            gridDivV.appendChild(gridDivH)
-        }
-    }
-})
+btnResize.addEventListener("click", createNGrid)
 
-const gridDivH = document.querySelectorAll(".grdH")
 
+createGrid(gridSize, oGridSize)
+const gridDivHh = document.querySelectorAll(".grdH")
 btn.forEach(element => {
     element.addEventListener("click", () =>{
         color = element.textContent
@@ -45,7 +56,8 @@ btn.forEach(element => {
     })
 });
 
-gridDivH.forEach(element => {
+gridDivHh.forEach(element => {
+    console.log("1")
     element.addEventListener("mouseover", () =>{
         element.style.cssText = "background: "+ color +";"
     })
