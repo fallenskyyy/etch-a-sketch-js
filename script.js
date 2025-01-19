@@ -11,7 +11,6 @@ function createNGrid(){
     createGrid(gridSize, oGridSize)
     const gridDivHh = document.querySelectorAll(".grdH")
     gridDivHh.forEach(element => {
-        console.log("1")
         element.addEventListener("mouseover", () =>{
             element.style.cssText = "background: "+ color +";"
         })
